@@ -1,1 +1,1 @@
-web: python passenger_wsgi.py
+web: python app.py

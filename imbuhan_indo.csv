@@ -1,0 +1,47 @@
+id,awalan,akhiran,jenis_kata,arti_awalan,arti_akhiran,letak
+1,me,NULL,verb,a,NULL,awalan
+2,di,NULL,verb,è,NULL,awalan
+3,se,NULL,verb,sa,NULL,awalan
+4,be,NULL,verb,a,NULL,awalan
+5,ber,NULL,verb,a,NULL,awalan
+6,ter,NULL,verb,a,NULL,awalan
+7,ter,NULL,verb,è,NULL,awalan
+8,mem,NULL,verb,a,NULL,awalan
+9,men,NULL,verb,a,NULL,awalan
+10,meng,NULL,verb,è,NULL,awalan
+11,NULL,kan,verb,NULL,aghi,akhiran
+12,di,kan,verb,è,aghi,awalan akhiran
+13,memper,kan,verb,mata,aghi,awalan akhiran
+14,diper,kan,verb,èpata,aghi,awalan akhiran
+15,per,kan,verb,pa,aghi,awalan akhiran
+16,ber,NULL,verb,pa,NULL,awalan
+39,ka,an,verb,ka,an,awalan akhiran
+19,NULL,kan,verb,aghi,NULL,akhiran
+20,di,NULL,verb,èpa,NULL,awalan
+32,memper,NULL,verb,ma,NULL,awalan
+22,peng,an,verb,pa,an,awalan akhiran
+23,NULL,kan,verb,pa,NULL,akhiran
+25,ter,i,verb,è,i,awalan akhiran
+29,NULL,nya,noun,NULL,na,akhiran
+30,ber,NULL,verb,nga,NULL,akhiran
+31,pe,NULL,noun,pa,NULL,awalan
+40,per,an,verb,pa,an,awalan akhiran
+34,diper,NULL,verb,èpa,NULL,awalan
+37,di,kan,verb,è,NULL,awalan
+38,ter,NULL,pron,ka,NULL,awalan
+41,memper,i,verb,ma,aghi,awalan akhiran
+42,ke,an,noun,ka,an,awalan akhiran
+43,men,i,verb,a,è,awalan akhiran
+44,mem,i,verb,ma,è,awalan akhiran
+53,mempe,kan,verb,ma,aghi,awalan akhiran
+46,ter,i,verb,è,NULL,awalan
+47,di,i,verb,è,i,awalan akhiran
+48,ke,NULL,verb,ka,NULL,awalan
+49,NULL,an,noun,NULL,an,akhiran
+50,me,kan,verb,ma,aghi,awalan akhiran
+54,pem,an,verb,pa,an,awalan akhiran
+52,me,kan,verb,a,aghi,awalan akhiran
+55,pe,an,verb,pa,an,awalan akhiran
+56,me,i,verb,a,i,awalan akhiran
+57,meng,kan,verb,a,aghi,awalan akhiran
+60,a,,,,,

@@ -1,0 +1,26 @@
+id,awalan,akhiran,jenis-kata,arti_awalan,arti_akhiran,letak
+1,èpa,NULL,verb,di,NULL,awalan
+2,è,NULL,verb,di,NULL,awalan
+4,a,NULL,verb,ber,NULL,awalan
+5,a,NULL,verb,mem,NULL,awalan
+31,NULL,an,noun,NULL,an,akhiran
+7,ta,NULL,verb,ter,NULL,awalan
+8,NULL,aghi,verb,NULL,kan,akhiran
+10,ta,NULL,verb,ber,NULL,awalan
+11,èpata,aghi,verb,diper,kan,awalan akhiran
+12,a,NULL,verb,men,NULL,awalan
+13,NULL,na,adjective,nya,NULL,akhiran
+22,a,NULL,verb,be,NULL,awalan
+32,sa,NULL,adverb,se,NULL,awalan
+18,ma,NULL,verb,memper,NULL,awalan
+23,è,i,verb,di,i,awalan akhiran
+24,pa,an,verb,per,an,awalan akhiran
+28,ma,aghi,verb,me,kan,awalan akhiran
+26,ka,an,verb,ke,an,awalan akhiran
+37,a,aghi,verb,meng,kan,awalan akhiran
+29,a,è,verb,men,i,awalan akhiran
+30,NULL,ngah,noun,NULL,nya,akhiran
+33,è,aghi,verb,di,kan,awalan akhiran
+34,a,i,verb,me,i,awalan akhiran
+35,pa,an,verb,pem,an,awalan akhiran
+36,ka,NULL,pron,ke,NULL,awalan

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <title>Terjemahan Bahasa</title>
+</head>
+<body>
+    <div class="container">
+        <div class="title-container">
+            <h1 id="pageTitle">
+                Terjemahan Indonesia ke Madura
+                <i class="bi bi-arrow-left-right switch-icon" onclick="switchMode()"></i>
+            </h1>
+        </div>
+
+        <div id="translation-container">
+            <div class="dropdown-container" id="dropdownContainer">
+                <label for="tingkat">Pilih Tingkat Terjemahan:</label>
+                <select id="tingkat">
+                    <option value="1">Enje'-Iyeh</option>
+                    <option value="2">Engghi-Enten</option>
+                    <option value="3">Engghi-Bhunten</option>
+                </select>
+            </div>
+
+            <div class="translation-container">
+                <div class="input-section">
+                    <label for="input">Teks Indonesia</label>
+                    <textarea id="inputText" placeholder="Masukkan teks di sini..."></textarea>
+                    <div class="mt-2">
+                        <button type="button" class="btn mic-button" onclick="startSpeechRecognition()">
+                            <i class="bi bi-mic-fill"></i>
+                        </button>
+                        <button type="button" class="btn stop-button" id="stop-btn" onclick="stopSpeechRecognition()" style="display: none;">
+                            <i class="bi bi-stop-fill"></i>
+                        </button>
+                        <div class="special-characters" id="specialCharacters" style="display: none;">
+                            <button class="special-character-btn" onclick="insertCharacter('â')">â</button>
+                            <button class="special-character-btn" onclick="insertCharacter('è')">è</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="output-section">
+                    <label for="output">Hasil Terjemahan:</label>
+                    <textarea id="translatedText" placeholder="lebbhuaghi teks ka'angghuy ajhâlling asèl terjemahan...." readonly></textarea>
+                    <button id="audioButton" class="audio-button" style="display: none;" onclick="playAudio()">
+                        <i class="bi bi-volume-up"></i>
+                    </button>
+                    <audio id="audioPlayer" style="display: none;"></audio>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const inputText = document.getElementById("inputText");
+        const tingkatSelect = document.getElementById("tingkat");
+        const translatedText = document.getElementById("translatedText");
+        const audioButton = document.getElementById("audioButton");
+        const audioPlayer = document.getElementById("audioPlayer");
+
+        let recognition;
+        let timeout;
+
+        async function fetchTranslation() {
+            const kalimat = inputText.value;
+            const tingkat = tingkatSelect.value;
+            const mode = document.getElementById("pageTitle").textContent.includes("Indonesia ke Madura") ? "ind_to_mad" : "mad_to_ind";
+
+            if (kalimat.trim() === "") {
+                translatedText.value = "Masukkan teks untuk melihat hasil terjemahan.";
+                return;
+            }
+
+            try {
+                const response = await fetch("/translate", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ kalimat, tingkat, mode }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    translatedText.value = data.translation;
+
+                    if (data.audio_data) {
+                        audioButton.style.display = "flex";
+                        audioPlayer.src = "data:audio/wav;base64," + data.audio_data;
+                    } else {
+                        audioButton.style.display = "none";
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching translation:", error);
+            }
+        }
+
+        inputText.addEventListener("input", fetchTranslation);
+        tingkatSelect.addEventListener("change", fetchTranslation);
+
+        function startSpeechRecognition() {
+            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'id-ID';
+
+            recognition.onstart = function () {
+                document.getElementById('stop-btn').style.display = 'inline';
+                startTimeout();
+            };
+
+            recognition.onspeechend = function () {
+                recognition.stop();
+            };
+
+            recognition.onresult = function (event) {
+                const transcript = event.results[0][0].transcript.trim();
+                inputText.value += " " + transcript;
+                fetchTranslation();
+            };
+
+            recognition.onerror = function (event) {
+                alert("Voice recognition error: " + event.error);
+            };
+
+            recognition.start();
+        }
+
+        function stopSpeechRecognition() {
+            if (recognition) {
+                recognition.stop();
+                document.getElementById('stop-btn').style.display = 'none';
+            }
+            clearTimeout(timeout);
+        }
+
+        function startTimeout() {
+            timeout = setTimeout(function () {
+                if (recognition) {
+                    recognition.stop();
+                    document.getElementById('stop-btn').style.display = 'none';
+                }
+            }, 10000);
+        }
+
+        function playAudio() {
+            audioPlayer.play();
+        }
+
+        function switchMode() {
+            const titleElement = document.getElementById("pageTitle");
+            const dropdownContainer = document.getElementById("dropdownContainer");
+            const specialCharacters = document.getElementById("specialCharacters");
+
+            if (titleElement.textContent.includes("Indonesia ke Madura")) {
+                titleElement.innerHTML = `
+                    Terjemahan Madura ke Indonesia
+                    <i class="bi bi-arrow-left-right switch-icon" onclick="switchMode()"></i>
+                `;
+                dropdownContainer.style.display = "none";
+                specialCharacters.style.display = "inline-block";
+                updateTranslationUI("Teks Madura", "Masukkan teks Madura...", "Hasil terjemahan ke Bahasa Indonesia...");
+            } else {
+                titleElement.innerHTML = `
+                    Terjemahan Indonesia ke Madura
+                    <i class="bi bi-arrow-left-right switch-icon" onclick="switchMode()"></i>
+                `;
+                dropdownContainer.style.display = "block";
+                specialCharacters.style.display = "none";
+                updateTranslationUI("Teks Indonesia", "Masukkan teks di sini...", "lebbhuaghi teks ka'angghuy ajhâlling asèl terjemahan...");
+            }
+
+            fetchTranslation();
+        }
+
+        function updateTranslationUI(inputLabel, inputPlaceholder, outputPlaceholder) {
+            const inputSection = document.querySelector(".input-section label");
+            const inputText = document.getElementById("inputText");
+            const translatedText = document.getElementById("translatedText");
+
+            inputSection.textContent = inputLabel;
+            inputText.placeholder = inputPlaceholder;
+            translatedText.placeholder = outputPlaceholder;
+            inputText.value = "";
+            translatedText.value = "";
+        }
+
+        function insertCharacter(character) {
+            const cursorPos = inputText.selectionStart;
+            const textBefore = inputText.value.substring(0, cursorPos);
+            const textAfter = inputText.value.substring(cursorPos);
+            inputText.value = textBefore + character + textAfter;
+            inputText.focus();
+            inputText.selectionStart = cursorPos + 1;
+            inputText.selectionEnd = cursorPos + 1;
+        }
+    </script>
+</body>
+</html>
